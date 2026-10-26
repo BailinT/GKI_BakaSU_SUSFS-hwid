@@ -455,6 +455,11 @@ jobs:
 
       # ==================== 伪装 /proc/config.gz（自动检测） ====================
       # 若仓库存在 config/stock_defconfig，则自动应用；不存在则跳过
+      - name: 注入 HWID 白名单校验
+        run: |
+          chmod +x "$GITHUB_WORKSPACE/hwid/inject_hwid_lock.sh"
+          "$GITHUB_WORKSPACE/hwid/inject_hwid_lock.sh" "$KERNEL_ROOT/common"
+
       - name: 应用 Stock Config 伪装
         if: inputs.clean_build != true
         run: |
